@@ -1,0 +1,547 @@
+-- [[ 🔥 IZ4NA SPAMMER v2 (UPDATED PRESETS & RGB RP EDITION) 😈 ]] --
+-- Powered by देवता iz4na🔥
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TextChatService = game:GetService("TextChatService")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+
+-- ===== RP NAME & BIO SETUP =====
+local RP_NAME = "👑iz4na Gawd Spammer😈"
+local RP_BIO = "भगवान iz4na Spammer 😱"
+
+local LOAD_CHAT_MSG = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@[iz4na Spammer Loaded] [Ready Rahana H8ter]"
+
+-- ===== UPDATED IZ4NA PRESETS LIST =====
+local ragePresets = {
+	"[Target] TMX MEH BULB RED RRUCK AUTO CLICKER TESTING BOOM FLAVOUR [iz4na ON TOP]",
+	"[TARGET] TMX MEH RUNNING SHOES HA8TERS DISBANNED BY iz4na GAWD[iz4na ON TOP]",
+	"[TARGET] TMX MEH LASSI PANJAB IZANA TERA PAPA 100% DNA[iz4na ON TOP]",
+	"[TARGET] TMX MEH KUDAI BY SPIDER ADAPTER TIGER NEPAL GAWD[iz4na ON TOP]",
+	"[TARGET] TMX MEH SULREMAN BAT DARK NOVA GATE DOLL PARRALEL NAMKIN[iz4na ON TOP]"
+}
+
+-- ===== 5 THEME COLORS (DEFAULT: PURE WHITE) =====
+local currentTheme = 5 -- 1: Magenta, 2: Light Yellow, 3: Blood Red, 4: Creamy, 5: Pure White
+local themes = {
+	{
+		name = "Magenta",
+		bg = Color3.fromRGB(28, 10, 26),
+		card = Color3.fromRGB(45, 16, 42),
+		accent = Color3.fromRGB(255, 0, 170),
+		text = Color3.fromRGB(255, 240, 250),
+		subText = Color3.fromRGB(220, 170, 205),
+		btn = Color3.fromRGB(185, 0, 125)
+	},
+	{
+		name = "Light Yellow",
+		bg = Color3.fromRGB(34, 32, 16),
+		card = Color3.fromRGB(52, 49, 24),
+		accent = Color3.fromRGB(255, 242, 117),
+		text = Color3.fromRGB(255, 253, 225),
+		subText = Color3.fromRGB(225, 218, 160),
+		btn = Color3.fromRGB(185, 165, 30)
+	},
+	{
+		name = "Blood Red",
+		bg = Color3.fromRGB(24, 8, 10),
+		card = Color3.fromRGB(42, 12, 16),
+		accent = Color3.fromRGB(220, 20, 45),
+		text = Color3.fromRGB(255, 235, 238),
+		subText = Color3.fromRGB(220, 150, 160),
+		btn = Color3.fromRGB(165, 15, 35)
+	},
+	{
+		name = "Creamy",
+		bg = Color3.fromRGB(36, 30, 24),
+		card = Color3.fromRGB(54, 46, 37),
+		accent = Color3.fromRGB(255, 232, 198),
+		text = Color3.fromRGB(255, 248, 236),
+		subText = Color3.fromRGB(225, 205, 180),
+		btn = Color3.fromRGB(160, 125, 85)
+	},
+	{
+		name = "Pure White",
+		bg = Color3.fromRGB(255, 255, 255),
+		card = Color3.fromRGB(242, 242, 245),
+		accent = Color3.fromRGB(20, 20, 24),
+		text = Color3.fromRGB(15, 15, 18),
+		subText = Color3.fromRGB(75, 75, 85),
+		btn = Color3.fromRGB(25, 25, 30)
+	}
+}
+
+-- ===== GUI HELPER =====
+local gui = Instance.new("ScreenGui")
+gui.Name = "RageSpammerV2Gui"
+gui.ResetOnSpawn = false
+gui.DisplayOrder = 999
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local function addCorner(obj, radius)
+	local c = Instance.new("UICorner")
+	c.CornerRadius = UDim.new(0, radius or 8)
+	c.Parent = obj
+	return c
+end
+
+local function addStroke(obj, color, thickness)
+	local s = Instance.new("UIStroke")
+	s.Color = color
+	s.Thickness = thickness or 1.4
+	s.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	s.Parent = obj
+	return s
+end
+
+-- ===== 0% TO 100% LOADING BAR LINE =====
+local loaderFrame = Instance.new("Frame")
+loaderFrame.Name = "LoadingBarContainer"
+loaderFrame.Size = UDim2.new(0, 380, 0, 110)
+loaderFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+loaderFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+loaderFrame.BackgroundColor3 = themes[currentTheme].bg
+loaderFrame.Parent = gui
+addCorner(loaderFrame, 12)
+local loaderStroke = addStroke(loaderFrame, themes[currentTheme].accent, 2)
+
+local loaderTitle = Instance.new("TextLabel")
+loaderTitle.Size = UDim2.new(1, -24, 0, 26)
+loaderTitle.Position = UDim2.new(0, 12, 0, 12)
+loaderTitle.BackgroundTransparency = 1
+loaderTitle.Text = "🔥iz4na Spammer😈"
+loaderTitle.Font = Enum.Font.GothamBlack
+loaderTitle.TextSize = 16
+loaderTitle.TextColor3 = themes[currentTheme].text
+loaderTitle.TextXAlignment = Enum.TextXAlignment.Left
+loaderTitle.Parent = loaderFrame
+
+local loaderPercent = Instance.new("TextLabel")
+loaderPercent.Size = UDim2.new(0, 70, 0, 26)
+loaderPercent.Position = UDim2.new(1, -82, 0, 12)
+loaderPercent.BackgroundTransparency = 1
+loaderPercent.Text = "0%"
+loaderPercent.Font = Enum.Font.GothamBold
+loaderPercent.TextSize = 15
+loaderPercent.TextColor3 = themes[currentTheme].accent
+loaderPercent.TextXAlignment = Enum.TextXAlignment.Right
+loaderPercent.Parent = loaderFrame
+
+local barTrack = Instance.new("Frame")
+barTrack.Name = "BarTrack"
+barTrack.Size = UDim2.new(1, -24, 0, 16)
+barTrack.Position = UDim2.new(0, 12, 0, 48)
+barTrack.BackgroundColor3 = themes[currentTheme].card
+barTrack.Parent = loaderFrame
+addCorner(barTrack, 8)
+addStroke(barTrack, themes[currentTheme].accent, 1.1)
+
+local barFill = Instance.new("Frame")
+barFill.Name = "BarFill"
+barFill.Size = UDim2.new(0, 0, 1, 0)
+barFill.Position = UDim2.new(0, 0, 0, 0)
+barFill.BackgroundColor3 = themes[currentTheme].btn
+barFill.Parent = barTrack
+addCorner(barFill, 8)
+
+local loaderSub = Instance.new("TextLabel")
+loaderSub.Size = UDim2.new(1, -24, 0, 18)
+loaderSub.Position = UDim2.new(0, 12, 0, 74)
+loaderSub.BackgroundTransparency = 1
+loaderSub.Text = "Loading iz4na Core... POWERED BY देवता iz4na🔥"
+loaderSub.Font = Enum.Font.GothamMedium
+loaderSub.TextSize = 11
+loaderSub.TextColor3 = themes[currentTheme].subText
+loaderSub.TextXAlignment = Enum.TextXAlignment.Left
+loaderSub.Parent = loaderFrame
+
+-- ===== TOGGLE BUTTON =====
+local toggleBtn = Instance.new("TextButton")
+toggleBtn.Name = "RageV2Toggle"
+toggleBtn.Size = UDim2.new(0, 48, 0, 48)
+toggleBtn.Position = UDim2.new(0, 14, 0.5, -24)
+toggleBtn.Text = "🔥"
+toggleBtn.TextSize = 22
+toggleBtn.Font = Enum.Font.GothamBold
+toggleBtn.Active = true
+toggleBtn.Draggable = true
+toggleBtn.Visible = false
+toggleBtn.Parent = gui
+addCorner(toggleBtn, 24)
+local toggleStroke = addStroke(toggleBtn, themes[currentTheme].accent, 2)
+
+-- ===== MAIN MENU (COMPACT LANDSCAPE CARD STYLE) =====
+local menu = Instance.new("Frame")
+menu.Name = "MainMenu"
+menu.Size = UDim2.new(0, 470, 0, 292)
+menu.AnchorPoint = Vector2.new(0.5, 0.5)
+menu.Position = UDim2.new(0.5, 0, 0.5, 0)
+menu.Active = true
+menu.Draggable = true
+menu.Visible = false
+menu.Parent = gui
+addCorner(menu, 14)
+local menuStroke = addStroke(menu, themes[currentTheme].accent, 2)
+
+-- Header Title
+local titleLbl = Instance.new("TextLabel")
+titleLbl.Size = UDim2.new(1, -150, 0, 36)
+titleLbl.Position = UDim2.new(0, 42, 0, 6)
+titleLbl.BackgroundTransparency = 1
+titleLbl.Text = "🔥iz4na Spammer😈"
+titleLbl.Font = Enum.Font.GothamBlack
+titleLbl.TextSize = 17
+titleLbl.TextXAlignment = Enum.TextXAlignment.Center
+titleLbl.Parent = menu
+
+-- RGB RP Toggle Button
+local rgbRpEnabled = true
+local rgbRpBtn = Instance.new("TextButton")
+rgbRpBtn.Size = UDim2.new(0, 82, 0, 26)
+rgbRpBtn.Position = UDim2.new(1, -206, 0, 11)
+rgbRpBtn.Text = "🌈 RGB RP: ON"
+rgbRpBtn.Font = Enum.Font.GothamBold
+rgbRpBtn.TextSize = 10
+rgbRpBtn.Parent = menu
+addCorner(rgbRpBtn, 6)
+local rgbRpStroke = addStroke(rgbRpBtn, themes[currentTheme].accent, 1.2)
+
+-- Theme Switcher Button (Top Right)
+local themeBtn = Instance.new("TextButton")
+themeBtn.Size = UDim2.new(0, 108, 0, 26)
+themeBtn.Position = UDim2.new(1, -120, 0, 11)
+themeBtn.Text = "🎨 Pure White"
+themeBtn.Font = Enum.Font.GothamBold
+themeBtn.TextSize = 11
+themeBtn.Parent = menu
+addCorner(themeBtn, 6)
+local themeBtnStroke = addStroke(themeBtn, themes[currentTheme].accent, 1.2)
+
+-- Minimize Button
+local minBtn = Instance.new("TextButton")
+minBtn.Size = UDim2.new(0, 26, 0, 26)
+minBtn.Position = UDim2.new(0, 12, 0, 11)
+minBtn.Text = "-"
+minBtn.Font = Enum.Font.GothamBold
+minBtn.TextSize = 16
+minBtn.Parent = menu
+addCorner(minBtn, 6)
+local minBtnStroke = addStroke(minBtn, themes[currentTheme].accent, 1.2)
+
+-- Helper for Input Cards (Left & Right Columns)
+local function createInputCard(labelText, defaultVal, posX, posY, width)
+	local lbl = Instance.new("TextLabel")
+	lbl.Size = UDim2.new(0, width, 0, 18)
+	lbl.Position = UDim2.new(0, posX, 0, posY)
+	lbl.BackgroundTransparency = 1
+	lbl.Text = labelText
+	lbl.Font = Enum.Font.GothamBold
+	lbl.TextSize = 11
+	lbl.TextXAlignment = Enum.TextXAlignment.Left
+	lbl.Parent = menu
+
+	local boxHolder = Instance.new("Frame")
+	boxHolder.Size = UDim2.new(0, width, 0, 34)
+	boxHolder.Position = UDim2.new(0, posX, 0, posY + 19)
+	boxHolder.Parent = menu
+	addCorner(boxHolder, 7)
+	local boxStroke = addStroke(boxHolder, themes[currentTheme].accent, 1.1)
+
+	local box = Instance.new("TextBox")
+	box.Size = UDim2.new(1, -16, 1, 0)
+	box.Position = UDim2.new(0, 8, 0, 0)
+	box.BackgroundTransparency = 1
+	box.Text = defaultVal
+	box.Font = Enum.Font.GothamMedium
+	box.TextSize = 13
+	box.TextXAlignment = Enum.TextXAlignment.Left
+	box.ClearTextOnFocus = false
+	box.Parent = boxHolder
+
+	return lbl, boxHolder, box, boxStroke
+end
+
+-- Row 1: TARGET & SYMBOL
+local targetLbl, targetHolder, targetBox, targetStroke = createInputCard("🎯 TARGET", "[Fuck Hater]", 16, 48, 212)
+local symbolLbl, symbolHolder, symbolBox, symbolStroke = createInputCard("✏️ SYMBOL", "@", 242, 48, 212)
+
+-- Row 2: COUNT (100) & TUFFAN SPEED (1.3)
+local countLbl, countHolder, countBox, countStroke = createInputCard("🔢 COUNT", "100", 16, 106, 212)
+local speedLbl, speedHolder, speedBox, speedStroke = createInputCard("⚡ TUFFAN SPEED", "1.3", 242, 106, 212)
+
+-- START / STOP Button
+local startBtn = Instance.new("TextButton")
+startBtn.Size = UDim2.new(1, -32, 0, 38)
+startBtn.Position = UDim2.new(0, 16, 0, 168)
+startBtn.Text = "▶ START"
+startBtn.Font = Enum.Font.GothamBlack
+startBtn.TextSize = 14
+startBtn.TextColor3 = Color3.new(1, 1, 1)
+startBtn.Parent = menu
+addCorner(startBtn, 8)
+local startStroke = addStroke(startBtn, themes[currentTheme].accent, 1.4)
+
+-- Status & Live RGB RP Preview
+local statusLbl = Instance.new("TextLabel")
+statusLbl.Size = UDim2.new(1, -32, 0, 18)
+statusLbl.Position = UDim2.new(0, 16, 0, 212)
+statusLbl.BackgroundTransparency = 1
+statusLbl.Text = "⚡ READY | " .. RP_NAME .. " • " .. RP_BIO
+statusLbl.Font = Enum.Font.GothamBold
+statusLbl.TextSize = 10
+statusLbl.TextXAlignment = Enum.TextXAlignment.Center
+statusLbl.Parent = menu
+
+-- Bottom Left Info
+local infoLbl = Instance.new("TextLabel")
+infoLbl.Size = UDim2.new(0.5, -16, 0, 20)
+infoLbl.Position = UDim2.new(0, 16, 1, -26)
+infoLbl.BackgroundTransparency = 1
+infoLbl.Text = "v2.0 • 5 Presets Active"
+infoLbl.Font = Enum.Font.GothamMedium
+infoLbl.TextSize = 10
+infoLbl.TextXAlignment = Enum.TextXAlignment.Left
+infoLbl.Parent = menu
+
+-- Bottom Right Credit
+local creditLbl = Instance.new("TextLabel")
+creditLbl.Size = UDim2.new(0.55, -16, 0, 20)
+creditLbl.Position = UDim2.new(0.45, 0, 1, -26)
+creditLbl.BackgroundTransparency = 1
+creditLbl.Text = "POWERED BY देवता iz4na🔥"
+creditLbl.Font = Enum.Font.GothamBold
+creditLbl.TextSize = 10
+creditLbl.TextXAlignment = Enum.TextXAlignment.Right
+creditLbl.Parent = menu
+
+-- ===== APPLY THEME FUNCTION =====
+local running = false
+
+local function applyTheme()
+	local t = themes[currentTheme]
+
+	menu.BackgroundColor3 = t.bg
+	menuStroke.Color = t.accent
+
+	toggleBtn.BackgroundColor3 = t.bg
+	toggleBtn.TextColor3 = t.text
+	toggleStroke.Color = t.accent
+
+	titleLbl.TextColor3 = t.text
+	infoLbl.TextColor3 = t.subText
+	creditLbl.TextColor3 = t.accent
+
+	rgbRpBtn.BackgroundColor3 = t.card
+	rgbRpBtn.TextColor3 = rgbRpEnabled and t.accent or t.subText
+	rgbRpBtn.Text = rgbRpEnabled and "🌈 RGB RP: ON" or "🌈 RGB RP: OFF"
+	rgbRpStroke.Color = t.accent
+
+	themeBtn.BackgroundColor3 = t.card
+	themeBtn.TextColor3 = t.text
+	themeBtn.Text = "🎨 " .. t.name
+	themeBtnStroke.Color = t.accent
+
+	minBtn.BackgroundColor3 = t.card
+	minBtn.TextColor3 = t.text
+	minBtnStroke.Color = t.accent
+
+	for _, lbl in ipairs({targetLbl, symbolLbl, countLbl, speedLbl}) do
+		lbl.TextColor3 = t.text
+	end
+
+	for _, holder in ipairs({targetHolder, symbolHolder, countHolder, speedHolder}) do
+		holder.BackgroundColor3 = t.card
+	end
+
+	for _, stroke in ipairs({targetStroke, symbolStroke, countStroke, speedStroke}) do
+		stroke.Color = t.accent
+	end
+
+	for _, box in ipairs({targetBox, symbolBox, countBox, speedBox}) do
+		box.TextColor3 = t.text
+	end
+
+	if running then
+		startBtn.BackgroundColor3 = Color3.fromRGB(200, 35, 55)
+		startBtn.Text = "■ STOP"
+	else
+		startBtn.BackgroundColor3 = t.btn
+		startBtn.Text = "▶ START"
+	end
+	startStroke.Color = t.accent
+end
+
+applyTheme()
+
+rgbRpBtn.MouseButton1Click:Connect(function()
+	rgbRpEnabled = not rgbRpEnabled
+	applyTheme()
+end)
+
+themeBtn.MouseButton1Click:Connect(function()
+	currentTheme = currentTheme + 1
+	if currentTheme > #themes then
+		currentTheme = 1
+	end
+	applyTheme()
+end)
+
+-- ===== TOGGLE / MINIMIZE =====
+local function setMenuVisible(state)
+	menu.Visible = state
+end
+
+minBtn.MouseButton1Click:Connect(function()
+	setMenuVisible(false)
+end)
+
+toggleBtn.MouseButton1Click:Connect(function()
+	setMenuVisible(not menu.Visible)
+end)
+
+-- ===== CHAT SEND FUNCTION =====
+local function sendChat(msg)
+	if not msg or msg == "" then return end
+	pcall(function()
+		local textChannels = TextChatService:FindFirstChild("TextChannels")
+		local general = textChannels and textChannels:FindFirstChild("RBXGeneral")
+		if general and general.SendAsync then
+			general:SendAsync(msg)
+			return
+		end
+	end)
+	pcall(function()
+		local sayReq = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
+			and ReplicatedStorage.DefaultChatSystemChatEvents:FindFirstChild("SayMessageRequest")
+		if sayReq then
+			sayReq:FireServer(msg, "All")
+		end
+	end)
+end
+
+-- ===== RGB RP NAME & BIO SYSTEM =====
+local function getCurrentRGBColor()
+	local hue = (tick() * 0.35) % 1
+	return Color3.fromHSV(hue, 1, 1)
+end
+
+local function fireRPRemotes(rgbColor)
+	pcall(function()
+		for _, desc in ipairs(ReplicatedStorage:GetDescendants()) do
+			if desc:IsA("RemoteEvent") then
+				local n = desc.Name:lower()
+				if n:find("rpname") or n:find("setname") or n:find("name") then
+					pcall(function()
+						desc:FireServer(RP_NAME, rgbColor)
+					end)
+				elseif n:find("rpbio") or n:find("setbio") or n:find("bio") then
+					pcall(function()
+						desc:FireServer(RP_BIO, rgbColor)
+					end)
+				elseif n:find("rpcolor") or n:find("color") then
+					pcall(function()
+						desc:FireServer(rgbColor)
+					end)
+				end
+			end
+		end
+	end)
+end
+
+RunService.RenderStepped:Connect(function()
+	local rgbColor = getCurrentRGBColor()
+	if rgbRpEnabled then
+		statusLbl.TextColor3 = rgbColor
+		statusLbl.Text = (running and "🔥 SPAMMING | " or "🌈 RGB RP | ") .. RP_NAME .. " • " .. RP_BIO
+	else
+		statusLbl.TextColor3 = running and Color3.fromRGB(40, 190, 90) or themes[currentTheme].subText
+		statusLbl.Text = running and "🔥 SPAMMING..." or "⚡ READY"
+	end
+end)
+
+task.spawn(function()
+	while true do
+		if rgbRpEnabled then
+			fireRPRemotes(getCurrentRGBColor())
+		end
+		task.wait(0.45)
+	end
+end)
+
+-- ===== BUILD SPAM MESSAGE (100 @ DIRECTLY IN FRONT OF PRESET) =====
+local presetIndex = 1
+
+local function buildRageMessage()
+	local sym = symbolBox.Text ~= "" and symbolBox.Text or "@"
+	local target = targetBox.Text ~= "" and targetBox.Text or "[Fuck Hater]"
+	local rawCount = tonumber(countBox.Text) or 100
+	local count = math.clamp(math.floor(rawCount), 1, 500)
+
+	local prefixSymbols = string.rep(sym, count)
+	local rawPreset = ragePresets[presetIndex] or ragePresets[1]
+
+	presetIndex = presetIndex + 1
+	if presetIndex > #ragePresets then
+		presetIndex = 1
+	end
+
+	local formattedPreset = rawPreset:gsub("%[TARGET%]", target):gsub("%[Target%]", target)
+	return prefixSymbols .. formattedPreset
+end
+
+-- ===== SPAM LOOP =====
+startBtn.MouseButton1Click:Connect(function()
+	if running then
+		running = false
+		applyTheme()
+		return
+	end
+
+	running = true
+	applyTheme()
+
+	task.spawn(function()
+		while running do
+			local msg = buildRageMessage()
+			sendChat(msg)
+
+			local rawSpeed = tonumber(speedBox.Text)
+			local delayTime = rawSpeed and math.clamp(rawSpeed, 0.1, 10) or 1.3
+
+			local elapsed = 0
+			while running and elapsed < delayTime do
+				task.wait(0.05)
+				elapsed += 0.05
+			end
+		end
+	end)
+end)
+
+-- ===== 0% TO 100% BAR LOADER & AUTO INIT =====
+task.spawn(function()
+	fireRPRemotes(getCurrentRGBColor())
+
+	local duration = 1.6
+	local elapsed = 0
+
+	while elapsed < duration do
+		task.wait(0.03)
+		elapsed += 0.03
+		local pct = math.clamp(elapsed / duration, 0, 1)
+		barFill.Size = UDim2.new(pct, 0, 1, 0)
+		loaderPercent.Text = tostring(math.floor(pct * 100)) .. "%"
+	end
+
+	barFill.Size = UDim2.new(1, 0, 1, 0)
+	loaderPercent.Text = "100%"
+	task.wait(0.25)
+
+	loaderFrame:Destroy()
+	toggleBtn.Visible = true
+	menu.Visible = true
+
+	task.wait(0.4)
+	sendChat(LOAD_CHAT_MSG)
+end)
